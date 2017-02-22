@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <POU Name="MAIN" Id="{7104b07b-394d-43ba-a13b-4dbba21beaa7}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	aiTemperature AT %I* : INT; // Declaration of Temperature
+	{attribute 'OPC.UA.DA' := '1'}
+	nAlive : UDINT;
+	{attribute 'OPC.UA.DA' := '1'}
+	iScaledTemp : REAL;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[iScaledTemp := INT_TO_REAL(aiTemperature) / 10;
+nAlive := nAlive + 1;
+IF nAlive = 10000 THEN
+	nAlive := 0;
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="11" Count="0" />
+      <LineId Id="19" Count="2" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
